@@ -4,24 +4,29 @@
  */
 void shell(void)
 {
-	char *prompt = "$ ";
-	char *lineptr = NULL;
+	char *prompt = "$ ", *lineptr = NULL;
 	size_t n = 0;
-	int gr, l, w;
+	ssize_t gr, w;
 
 	while (1)
 	{
 		w = write(STDOUT_FILENO, prompt, len(prompt));
 		if (w == -1)
+		{
 			perror("write");
+			exit(1);
+		}
 		while (1)
 		{
 			gr = getline(&lineptr, &n, stdin);
 			if (gr == -1)
+			{
 				perror("getline");
-			l = len(lineptr);
-			if (lineptr[l - 1] == '\n')
-				break;
+				exit(2);
+			}
+			if (lineptr[gr - 1] == '\n')
+				lineptr[gr - 1] = '\0';
+			get_process();
 		}
 	}
 	free(lineptr);
