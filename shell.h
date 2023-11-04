@@ -11,6 +11,6 @@
 
 int len(char *s);
 void shell(void);
-void get_process(void);
+void get_process(char *command);
 
 #endif /* SHELL_H */

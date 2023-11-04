@@ -1,14 +1,23 @@
 #include "shell.h"
 /**
  * get_process - forks the current process and execve the child
+ * @command: pointer to the first token
  */
-void get_process(void)
+void get_process(char *command)
 {
 	pid_t pid;
 	int status;
 	extern char **environ;
-	char *args[] = {"/bin/ls", NULL};	
+	char **args;
 
+	args = malloc(sizeof(char *) * 2);
+	if (args == NULL)
+	{
+		perror("malloc");
+		exit(5);
+	}
+	args[0] = command;
+	args[1] = NULL;
 	pid = fork();
 	if (pid == -1)
 	{
@@ -19,7 +28,7 @@ void get_process(void)
 	{
 		if (execve(args[0], args, environ) == -1)
 		{
-			perror("execve");
+			perror("./shell");
 			exit(4);
 		}
 	}
@@ -28,4 +37,5 @@ void get_process(void)
 		wait(&status);
 		shell();
 	}
+	free(*args);
 }

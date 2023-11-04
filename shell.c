@@ -26,7 +26,7 @@ void shell(void)
 			}
 			if (lineptr[gr - 1] == '\n')
 				lineptr[gr - 1] = '\0';
-			get_process();
+			get_process(lineptr);
 		}
 	}
 	free(lineptr);
