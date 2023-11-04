@@ -21,6 +21,7 @@ void shell(void)
 			gr = getline(&lineptr, &n, stdin);
 			if (gr == -1)
 			{
+				free(lineptr);
 				perror("getline");
 				exit(2);
 			}

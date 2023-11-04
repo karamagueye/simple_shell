@@ -6,9 +6,8 @@
 void get_process(char *command)
 {
 	pid_t pid;
-	int status;
-	extern char **environ;
 	char **args;
+	int status;
 
 	args = malloc(sizeof(char *) * 2);
 	if (args == NULL)
@@ -21,6 +20,7 @@ void get_process(char *command)
 	pid = fork();
 	if (pid == -1)
 	{
+		free_2d_array(args);
 		perror("fork");
 		exit(3);
 	}
@@ -28,6 +28,7 @@ void get_process(char *command)
 	{
 		if (execve(args[0], args, environ) == -1)
 		{
+			free_2d_array(args);
 			perror("./shell");
 			exit(4);
 		}
@@ -35,7 +36,7 @@ void get_process(char *command)
 	else
 	{
 		wait(&status);
+		free_2d_array(args);
 		shell();
 	}
-	free(*args);
 }
