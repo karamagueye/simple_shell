@@ -1,8 +1,9 @@
 #include "shell.h"
 /**
  * shell - Display a prompt and wait for the user to type a command infinitely
+ * @name: name of the executable
  */
-void shell(void)
+void shell(char *name)
 {
 	char *prompt = "$ ", *lineptr = NULL;
 	size_t n = 0;
@@ -25,9 +26,11 @@ void shell(void)
 				perror("getline");
 				exit(2);
 			}
-			if (lineptr[gr - 1] == '\n')
+			if ((lineptr[0] == '\n') && (lineptr[1] == '\0'))
+				break;
+			else if (lineptr[gr - 1] == '\n')
 				lineptr[gr - 1] = '\0';
-			get_process(lineptr);
+			get_process(lineptr, name);
 		}
 	}
 	free(lineptr);

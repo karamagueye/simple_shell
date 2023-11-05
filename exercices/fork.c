@@ -6,13 +6,17 @@
 int main(void)
 {
 	pid_t pid;
-	char *args[] = {"ls", "-l", "/tmp", NULL};
+	char *args[] = {"/bin/ls", "-l", "/tmp", NULL};
 	int status, i;
 
 	i = 0;
-	while (i < 4)
+	while (i < 5)
 	{
 		pid = fork();
+		if (pid == -1)
+		{
+			perror("fork");
+		}
 		if (pid == 0)
 		{
 			execve(args[0], args, NULL);

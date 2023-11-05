@@ -3,8 +3,9 @@
  * main - checks code
  * Return: 0 (success)
  */
-int main(void)
+int main(int argc, char **argv)
 {
-	shell();
+	(void)argc;
+	shell(argv[0]);
 	return (0);
 }
