@@ -46,7 +46,6 @@ void get_process(char *command, char *name)
 			perror("wait");
 			exit(6);
 		}
-		free_2d_array(args);
 		shell(name);
 	}
 }

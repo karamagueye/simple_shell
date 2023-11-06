@@ -16,6 +16,7 @@ int len(char *s);
 void shell(char *name);
 void get_process(char *command, char *name);
 void free_2d_array(char **arr);
-
+int check(char *command);
+void handle_args(char *command, char *name);
 
 #endif /* SHELL_H */
