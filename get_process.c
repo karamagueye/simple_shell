@@ -7,36 +7,25 @@
 void get_process(char *command, char *name)
 {
 	pid_t pid;
-	char **args, *token;
-	int status, i;
+	int status;
+	char **args = NULL;
 
-	args = malloc(sizeof(char *) * 1024);
-	if (args == NULL)
-	{
-		perror("malloc");
-		exit(5);
-	}
-	token = strtok(command, " ");
-	for (i = 0; token != NULL; i++)
-	{
-		args[i] = token;
-		token = strtok(NULL, " ");
-	}
-	args[i] = NULL;
 	pid = fork();
 	if (pid == -1)
 	{
-		free_2d_array(args);
 		perror("fork");
 		exit(3);
 	}
+	args = get_args(command);
 	if (pid == 0)
 	{
 		if (execve(args[0], args, environ) == -1)
 		{
+			free_2d_array(args);
 			perror(name);
 			exit(4);
 		}
+		free_2d_array(args);
 	}
 	else
 	{

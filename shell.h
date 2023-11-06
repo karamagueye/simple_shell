@@ -18,5 +18,6 @@ void get_process(char *command, char *name);
 void free_2d_array(char **arr);
 int check(char *command);
 void handle_args(char *command, char *name);
+char **get_args(char *command);
 
 #endif /* SHELL_H */
