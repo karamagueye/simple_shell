@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <errno.h>
 
 extern char **environ;
 
@@ -14,10 +15,8 @@ extern char **environ;
 
 int len(char *s);
 void shell(char *name);
-void get_process(char *command, char *name);
-void free_2d_array(char **arr);
-int check(char *command);
-void handle_args(char *command, char *name);
-char **get_args(char *command);
+void get_process(char **command, char *name);
+char **args(char *command, char *delim);
+int list_words(char *command, char *delim);
 
 #endif /* SHELL_H */

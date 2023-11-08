@@ -20,27 +20,28 @@ void shell(char *name)
 		while (1)
 		{
 			gr = getline(&lineptr, &n, stdin);
-			fflush(stdin);
-			if ((lineptr[0] == '\0') && (lineptr != NULL))
+			if (gr == -1)
 			{
-				free(lineptr);
-				write(STDOUT_FILENO, "\n", 1);
-				exit(0);
-			}
-			else if (gr == -1)
-			{
-				free(lineptr);
-				perror("getline");
-				exit(2);
+				if (errno == 0)
+				{
+					write(STDOUT_FILENO, "\n", 1);
+					free(lineptr);
+					exit(0);
+				}
+				else
+				{
+					free(lineptr);
+					perror("getline");
+					exit(2);
+				}
 			}
 			if ((lineptr[0] == '\n') && (lineptr[1] == '\0'))
 			{
-				lineptr = NULL;
 				break;
 			}
 			else if (lineptr[gr - 1] == '\n')
 				lineptr[gr - 1] = '\0';
-			get_process(lineptr, name);
+			get_process(&lineptr, name);
 		}
 	}
 }
