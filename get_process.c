@@ -10,6 +10,7 @@ void get_process(char **command, char *name)
 	int status;
 	char **arguments;
 
+	arguments = handle_path(command, name);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -17,7 +18,6 @@ void get_process(char **command, char *name)
 		perror("fork");
 		exit(3);
 	}
-	arguments = args(*command, " ");
 	if (pid == 0)
 	{
 		if (execve(arguments[0], arguments, environ) == -1)

@@ -1,9 +1,6 @@
 #include "shell.h"
 /**
- * list_words - counts the number of words in a string
- * @command: string to count
- * @delim: delimiter to separate words
- * Return: number of words
+ * 
  */
 int list_words(char *command, char *delim)
 {
@@ -19,11 +16,7 @@ int list_words(char *command, char *delim)
 	return (wordlist);
 }
 /**
- * args - allocate right amount of memory for a an array of
- * strings that will store a tokenized string
- * @command: string to tokenize
- * @delim: delimiter to use
- * Return: double pointer to the array
+ *
  */
 char **args(char *command, char *delim)
 {
