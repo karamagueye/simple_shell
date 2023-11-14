@@ -33,6 +33,6 @@ void get_process(char **command, char *name, char **env)
 		}
 		free(arguments);
 		free(*command);
-		shell(name, env);
+		shell(name, env, WEXITSTATUS(status));
 	}
 }

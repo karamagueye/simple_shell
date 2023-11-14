@@ -3,7 +3,7 @@
  * shell - Display a prompt and wait for the user to type a command infinitely
  * @name: name of the executable
  */
-void shell(char *name, char **env)
+void shell(char *name, char **env, int exit_status)
 {
 	char *prompt = "$ ", *lineptr = NULL;
 	size_t n = 0;
@@ -41,7 +41,7 @@ void shell(char *name, char **env)
 			if (_strcmp(lineptr, "exit\n") == 0)
 			{
 				free(lineptr);
-				exit(0);
+				exit(exit_status);
 			}
 			if (_strcmp(lineptr, "env\n") == 0)
 			{

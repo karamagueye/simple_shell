@@ -19,7 +19,7 @@ int len(char *s);
 char *_strdup(char *str);
 char *_strncpy(char *dest, char *src, int n);
 
-void shell(char *name, char **env);
+void shell(char *name, char **env, int exit_status);
 void get_process(char **command, char *name, char **env);
 char **args(char *command, char *delim);
 int list_words(char *command, char *delim);

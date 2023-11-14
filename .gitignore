@@ -1,4 +1,6 @@
 TEST_SUITES
 allowed_functions
 runchecker.bash
-exercices/
+exercices
+TEST_SUITE
+SIMPLE_SHELL_TEST_SUITE
