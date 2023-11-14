@@ -8,54 +8,6 @@ For this project, we expect you to look at these concepts:
 [All about Team Projects + Pairings + FAQ (A must read)]()
 [Struggling with the sandbox? Try this: Using Docker & WSL on your local host]()
 
-*Background Context*
-
-Write a simple UNIX command interpreter.
-
-*Important message from Julien*
-
-It’s time for the famous Simple Shell project. This is one of the most anticipated project and also one that will challenge you a lot about everything you have learn so far:
-
-Basics of programming
-Basics of C
-Basics of thinking like an engineer
-Group work
-and Learning how to learn
-I would like to take this moment to remind you about a few important things.
-
-First, remember the framework. If you do not know it by heart already, it is probably a good idea to read it again: https://intranet.alxswe.com/concepts/559
-
-Note that there is no point in this framework that says it is ok to look at code from other people. It is not allowed to look at other people’s code, either other students or online articles or videos. At ALX SE we do not copy solutions and we do not look at it when we start a project.
-
-In the context of learning (some of these will no longer be true when you work):
-
-NEVER copy any code, never look at solution (and never give any solution to your friends, you are not helping them by doing so)
-ALWAYS write code alone from scratch after you get help to check that you have actually understood. If you can not do it, you have not understood enough, and need to study more. Do not rewrite code from memory, but from understanding.
-I saw some of you sharing resources with each other already. Tutorials on how to do the shell step by step with all the code associated with these, or even video and documents with the solution without even any explanation. This is not the right way to learn. Please do not be tempted by these links. They will only push you to take shortcuts and / or cheat. And trust me, you will be caught. Kimba is not a joke and he is here to remind you why you are here.
-
-While we encourage the use of ChatGPT and co in the framework (also, not right away, but at the right step, see framework), it is important to understand that the same rules apply to these AI tools (again, in the context of learning. When you will work it will be completely different, but context matters). At no point does it say that you are allowed to use copilot or ChatGPT to code the solution. If you do, you will get 200% (for a few hours), understand 0, learn 0, and you will be caught for cheating 100%, and then your score for both you and your partner will be 0%. If you don’t get how to use ChatGPT and other AI tools in the context of learning, simply do not use them.
-
-The reality is that at this point of the program, if you have not cheated before, you have everything you need to complete the project with what you have learned + the page “Everything you need to know to start coding your own shell” https://intranet.alxswe.com/concepts/64
-
-Actually, you do not even need to open Google once. Focus on your whiteboarding, and everything will fall in place. Remember, at ALX SE you never learn the solution, you learn how to walk toward the solution. You learn to create the tutorial, so if you follow one, you are looking at the solution, you are taking a very serious shortcut that will undermine your learning.
-
-Last thing about the framework. Note that the first thing to do is “0. Read”. Every detail counts. Make sure you read and test everything.
-
-The shell project is a group project. That means you will be paired with someone. You already did this with printf, so please apply everything you have learned from the printf experience here. A quick reminder, that a group project is NOT:
-
-I do nothing and cross fingers for my partner to do everything so I can have a good score
-I do everything because I am so much better than my partner and I don’t care about them
-A group project at ALX SE is a project that both of you are responsible for. Everything anyone pushes to Github is the responsibility of both partners. It is not ok to say later “I didn’t cheat it’s my partner I didn’t know they didn’t tell me”.
-
-So you are supposed to work TOGETHER. And you should both understand every single line of code that any of you pushes. Here is a link for you to read about pair programming: https://intranet.alxswe.com/concepts/121
-
-If you plan on not working on the shell project (or if at any point in time you can’t), it is your responsibility to tell both the staff and your partner so that they can find another partner who will work with them asap.
-
-If your group gets caught for plagiarism we will not tolerate “I didn’t do anything, so I should not be flagged”. Yes you should be flagged, because you are someone who doesn’t care about others and thought it was ok to let your partner down and to maybe get the score without doing anything.
-
-The shell is an incredibly cool project. GL HF!
-
-Julien
 
 **Resources**
 
@@ -139,3 +91,55 @@ waitpid (man 2 waitpid)
 wait3 (man 2 wait3)
 wait4 (man 2 wait4)
 write (man 2 write)
+
+let’s break down the structure of the shell implementation:
+
+Main Loop: The shell operates using a principal loop that continuously reads user input, parses it into commands and arguments, executes the commands, and then waits for more user input.
+
+Reading Input: The shell reads user input using the getline function. This function reads an entire line from the stream, storing the address of the buffer containing the text into *lineptr. The buffer is null-terminated and includes the newline character if one was found.
+
+Parsing Input: The shell parses the user’s input into a command and its arguments using the strtok function. This function splits a string into tokens based on a set of delimiters. In this case, it’s used to divide the input into words separated by spaces.
+
+Executing Commands: The shell executes commands using a combination of fork, execve, and execvp functions. The fork function is used to create a new process. The execve or execvp function is then used in the child process to replace the current process image with a new one, effectively running the command.
+
+Handling Paths: The shell handles paths using a custom function, _which. This function takes a command name and searches for it in the directories specified in the PATH environment variable. If a file with the command name is found, _which returns the full path to the command. If no file is found after checking all directories in the PATH, _which returns NULL.
+
+Error Handling: The shell handles errors using the perror function. This function produces a message on the standard error output, beginning with a string you specify, followed by a colon and a space, and then the textual representation of the current errno value.
+
+In C programming language, there is an external variable called `errno`. This variable is automatically assigned a code (value) when a function is called, and this code can be used to identify the type of error that has been encountered³. Different codes (values) for `errno` mean different types of errors³.
+
+The `perror()` function in C prints a description of the last error encountered during a call to a system function⁴. When a system call fails, it usually returns -1 and sets the variable `errno` to a value describing what went wrong⁴. These values can be found in `<errno.h>`⁴.
+
+Here are some examples of `errno` values and their descriptions⁶:
+- **EPERM (1)**: Operation not permitted
+- **ENOENT (2)**: No such file or directory
+- **ESRCH (3)**: No such process
+- **EINTR (4)**: Interrupted system call
+- **EIO (5)**: I/O error
+- **ENXIO (6)**: No such device or address
+- **E2BIG (7)**: Argument list too long
+- **ENOEXEC (8)**: Exec format error
+- **EBADF (9)**: Bad file number
+- **ECHILD (10)**: No child processes
+- **EAGAIN (11)**: Try again
+- **ENOMEM (12)**: Out of memory
+- **EACCES (13)**: Permission denied
+- **EFAULT (14)**: Bad address
+- **ENOTBLK (15)**: Block device required
+
+Please note that the actual error messages associated with values of `errno` can be obtained using `strerror` or directly printed using function `perror`[^10^].
+
+Source: Conversation with Bing, 11/13/2023
+(1) Error Handling in C - GeeksforGeeks. https://www.geeksforgeeks.org/error-handling-in-c/.
+(2) perror(3) - Linux manual page - man7.org. https://www.man7.org/linux/man-pages/man3/perror.3.html.
+(3) 131 Linux Error Codes for C Programming Language using errno. https://www.thegeekstuff.com/2010/10/linux-error-codes/.
+(4) errno - C++ Users. https://cplusplus.com/reference/cerrno/errno/.
+(5) how can perror and errno show different results (Linux)?. https://stackoverflow.com/questions/35489131/how-can-perror-and-errno-show-different-results-linux.
+(6) When should I use perror("...") and fprintf(stderr, "...")?. https://stackoverflow.com/questions/12102332/when-should-i-use-perror-and-fprintfstderr.
+(7) errno - C++ Reference - cplusplus.com. https://legacy.cplusplus.com/reference/cerrno/errno/.
+(8) errno(3) - Linux manual page - man7.org. https://www.man7.org/linux/man-pages/man3/errno.3.html.
+(9) Errno Values for UNIX-Type Functions - IBM. https://www.ibm.com/docs/en/i/7.4?topic=ssw_ibm_i_74/apis/unix14.htm.
+(10) ERRNO Values - IBM. https://www.ibm.com/docs/SSB27H_6.2.0/fa2ti_errno_values.html.
+
+
+This structure forms the backbone of the shell program, providing a framework within which the shell can read, parse, and execute commands. It’s a testament to the power and flexibility of C that such a complex program can be built using relatively simple building blocks.

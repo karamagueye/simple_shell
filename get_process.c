@@ -4,13 +4,13 @@
  * @command: double pointer to the command
  * @name: name of the program
  */
-void get_process(char **command, char *name)
+void get_process(char **command, char *name, char **env)
 {
 	pid_t pid;
 	int status;
 	char **arguments;
 
-	arguments = handle_path(command, name);
+	arguments = args(*command, " ");
 	pid = fork();
 	if (pid == -1)
 	{
@@ -20,13 +20,7 @@ void get_process(char **command, char *name)
 	}
 	if (pid == 0)
 	{
-		if (execve(arguments[0], arguments, environ) == -1)
-		{
-			free(arguments);
-			free(*command);
-			perror(name);
-			exit(4);
-		}
+		exec_command(command, arguments, name);
 	}
 	else
 	{
@@ -39,6 +33,6 @@ void get_process(char **command, char *name)
 		}
 		free(arguments);
 		free(*command);
-		shell(name);
+		shell(name, env);
 	}
 }

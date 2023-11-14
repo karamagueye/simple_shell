@@ -31,7 +31,7 @@ char **args(char *command, char *delim)
 	char **args = NULL;
 	char *token, *command_copy;
 
-	command_copy = strdup(command);
+	command_copy = _strdup(command);
 	num_words = list_words(command_copy, delim);
 	free(command_copy);
 	args = malloc(sizeof(char *) * (num_words + 1));
