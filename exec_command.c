@@ -9,7 +9,7 @@ void exec_command(char **command, char **arguments, char *name)
 {
 	if (_strchr(*command, '/') != NULL)
 	{
-		if (execve(arguments[0], arguments, NULL) == -1)
+		if (execve(arguments[0], arguments, environ) == -1)
 		{
 			free(arguments);
 			free(*command);
@@ -49,7 +49,7 @@ int _execvp(char *filename, char **arguments)
 	{
 		return (-1);
 	}
-	if (execve(path, arguments, NULL) == -1)
+	if (execve(path, arguments, environ) == -1)
 	{
 		free(path);
 		perror("execve");

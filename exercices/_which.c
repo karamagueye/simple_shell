@@ -2,7 +2,7 @@
 /**
  *
  */
-int _which(char *filename)
+char *_which(char *filename)
 {
 	char **pathname = NULL, *path_copy;
 	char *path;
@@ -33,26 +33,35 @@ int _which(char *filename)
 		strcat(path, filename);
 		if (stat(path, &st) == 0)
 		{
-			printf("found\n");
+			free(pathname);
 			free(path_copy);
-			free(path);
-			return (0);
+			return (path);
 		}
 		free(path_copy);
 		free(path);
 	}
 	free(pathname);
-	printf("not found\n");
-	return (1);
+	return (NULL);
 }
 /**
  *
  */
 int main(int ac, char **av)
 {
-	if (ac > 1)
-		_which(av[1]);
+	char *path;
+
+	if (ac == 2)
+	{
+		path = _which(av[1]);
+		if (path != NULL)
+			printf("%s\n", path);
+		else
+			printf("not found\n");
+	}
 	else
+	{
 		printf("usage: %s filename\n", av[0]);
+	}
+	free(path);
 	return (0);
 }
