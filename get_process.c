@@ -3,6 +3,7 @@
  * get_process - forks the current process and execve the child
  * @command: double pointer to the command
  * @name: name of the program
+ * @env: environment
  */
 void get_process(char **command, char *name, char **env)
 {

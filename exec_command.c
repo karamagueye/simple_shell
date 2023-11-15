@@ -1,5 +1,4 @@
 #include "shell.h"
-int index_line = 0;
 /**
  * exec_command - executes a command
  * @command: command to execute
@@ -8,7 +7,6 @@ int index_line = 0;
  */
 void exec_command(char **command, char **arguments, char *name)
 {
-	index_line++;
 	if (_strchr(*command, '/') != NULL)
 	{
 		if (execve(arguments[0], arguments, NULL) == -1)
