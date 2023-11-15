@@ -14,7 +14,7 @@ void exec_command(char **command, char **arguments, char *name)
 			free(arguments);
 			free(*command);
 			if (errno == ENOENT)
-				perror("not found");
+				perror(name);
 			else
 				perror(name);
 			exit(4);
@@ -27,7 +27,7 @@ void exec_command(char **command, char **arguments, char *name)
 			free(arguments);
 			free(*command);
 			if (errno == ENOENT)
-				perror("not found");
+				perror(name);
 			else
 				perror(name);
 			exit(12);
