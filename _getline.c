@@ -25,7 +25,7 @@ void _getline(char *name, char **env, int exit_status)
 		perror("getline");
 		exit(2);
 	}
-	if (_strspn(lineptr, " \t\n") == 1024)
+	if ((_strspn(lineptr, " \t\n") == 1024) && (errno == ENOTTY))
 	{
 		free(lineptr);
 		exit(0);

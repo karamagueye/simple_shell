@@ -45,6 +45,10 @@ int _execvp(char *filename, char **arguments)
 	char *path;
 
 	path = _which(filename);
+	if (path == NULL)
+	{
+		return (-1);
+	}
 	if (execve(path, arguments, environ) == -1)
 	{
 		free(path);
