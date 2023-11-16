@@ -7,7 +7,7 @@
 char *_which(char *filename)
 {
 	char **pathname = NULL, *path_copy, *path, *filename_copy, *s;
-	int i, pathname_length;
+	int i;
 	struct stat st;
 
 	filename_copy = _strdup(filename);
@@ -23,8 +23,7 @@ char *_which(char *filename)
 			perror("strdup");
 			exit(7);
 		}
-		pathname_length = len(pathname[i]) + len(filename_copy) + 2;
-		path = malloc(sizeof(char) * pathname_length);
+		path = malloc(sizeof(char) * (len(pathname[i]) + len(filename_copy) + 2));
 		if (path == NULL)
 		{
 			perror("malloc");
