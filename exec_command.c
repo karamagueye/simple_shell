@@ -42,18 +42,30 @@ void exec_command(char **command, char **arguments, char *name)
  */
 int _execvp(char *filename, char **arguments)
 {
+	char **path;
+
+	path = search_path(filename);
+	if (execve(*path, arguments, environ) == -1)
+	{
+		free(*path);
+		perror("execve");
+		return (-1);
+	}
+	return (0);
+}
+/**
+ * search_path - search path of a file
+ * @filename: name of file
+ * Return: pointer to path
+ */
+char **search_path(char *filename)
+{
 	char *path;
 
 	path = _which(filename);
 	if (path == NULL)
 	{
-		return (-1);
+		return (NULL);
 	}
-	if (execve(path, arguments, environ) == -1)
-	{
-		free(path);
-		perror("execve");
-		return (-1);
-	}
-	return (0);
+	return (&path);
 }

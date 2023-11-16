@@ -1,10 +1,13 @@
 #include "shell.h"
 /**
- *
+ * handle_built_ins - handle built ins commands
+ * @lineptr: pointer to buffer that contains input
+ * @env: environment
+ * @exit_status: exit status of child process
  */
 void handle_built_ins(char **lineptr, char **env, int exit_status)
 {
-	int i;
+	int i, j;
 
 	if (_strcmp(*lineptr, "exit\n") == 0)
 	{
@@ -15,8 +18,18 @@ void handle_built_ins(char **lineptr, char **env, int exit_status)
 	{
 		for (i = 0; env[i] != NULL; i++)
 		{
-			write(STDOUT_FILENO, env[i], len(env[i]));
-			write(STDOUT_FILENO, "\n", 1);
+			for (j = 0; j <= i; j++)
+			{
+				if ((_strcmp(env[i], env[j]) == 0) && (i != j))
+				{
+					break;
+				}
+			}
+			if (j == i)
+			{
+				write(STDOUT_FILENO, env[i], len(env[i]));
+				write(STDOUT_FILENO, "\n", 1);
+			}
 		}
 	}
 }

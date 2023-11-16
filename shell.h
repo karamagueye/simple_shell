@@ -30,6 +30,7 @@ char **args(char *command, char *delim);
 int list_words(char *command, char *delim);
 char *_which(char *filename);
 char *_strchr(char *s, char c);
+char **search_path(char *filename);
 int _execvp(char *filename, char **arguments);
 void exec_command(char **command, char **arguments, char *name);
 char *_getenv(const char *name);
