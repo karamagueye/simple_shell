@@ -6,12 +6,13 @@
  */
 char *_which(char *filename)
 {
-	char **pathname = NULL, *path_copy;
-	char *path, *filename_copy, *s;
+	char **pathname = NULL, *path_copy, *path, *filename_copy, *s;
 	int i, pathname_length;
 	struct stat st;
 
 	filename_copy = _strdup(filename);
+	if (filename_copy == NULL)
+		return (NULL);
 	s = _getenv("PATH");
 	pathname = args(s, ":");
 	for (i = 0; pathname[i] != NULL; i++)
@@ -30,9 +31,9 @@ char *_which(char *filename)
 			free(path_copy);
 			exit(8);
 		}
-		strcpy(path, path_copy);
-		strcat(path, "/");
-		strcat(path, filename_copy);
+		_strcpy(path, path_copy);
+		_strcat(path, "/");
+		_strcat(path, filename_copy);
 		if (stat(path, &st) == 0)
 		{
 			free(pathname);

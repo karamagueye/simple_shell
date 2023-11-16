@@ -8,7 +8,7 @@
  */
 int main(int argc, char **argv, char **env)
 {
-	(void)argc;
-	shell(argv[0], env, 0);
+	if (argc != 0)
+		shell(argv[0], env, 0);
 	return (0);
 }

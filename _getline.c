@@ -10,7 +10,6 @@ void _getline(char *name, char **env, int exit_status)
 	char *lineptr = NULL;
 	size_t n = 0;
 	ssize_t gr;
-	int i;
 
 	gr = getline(&lineptr, &n, stdin);
 	if (gr == -1)
@@ -26,19 +25,12 @@ void _getline(char *name, char **env, int exit_status)
 		perror("getline");
 		exit(2);
 	}
-	if (_strcmp(lineptr, "exit\n") == 0)
+	if (_strspn(lineptr, " \t\n") == 1024)
 	{
 		free(lineptr);
-		exit(exit_status);
+		exit(0);
 	}
-	if (_strcmp(lineptr, "env\n") == 0)
-	{
-		for (i = 0; env[i] != NULL; i++)
-		{
-			write(STDOUT_FILENO, env[i], len(env[i]));
-			write(STDOUT_FILENO, "\n", 1);
-		}
-	}
+	handle_built_ins(&lineptr, env, exit_status);
 	if ((lineptr[0] == '\n') && (lineptr[1] == '\0'))
 	{
 		free(lineptr);

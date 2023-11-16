@@ -6,10 +6,13 @@
  */
 int len(char *s)
 {
-	int l;
+	int l = 0;
 
-	for (l = 0; s[l] != '\0'; l++)
+	if (s != NULL)
 	{
+		for (l = 0; s[l] != '\0'; l++)
+		{
+		}
 	}
 	return (l);
 }

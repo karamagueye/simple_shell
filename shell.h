@@ -9,6 +9,7 @@
 #include <string.h>
 #include <errno.h>
 #include <sys/stat.h>
+#include <signal.h>
 
 extern char **environ;
 
@@ -17,9 +18,13 @@ extern char **environ;
 int len(char *s);
 char *_strdup(char *str);
 char *_strncpy(char *dest, char *src, int n);
+char *_strcpy(char *dest, char *src);
+char *_strcat(char *dest, char *src);
+int _strspn(char *s, char *accept);
 
 void shell(char *name, char **env, int exit_status);
 void _getline(char *name, char **env, int exit_status);
+void handle_built_ins(char **lineptr, char **env, int exit_status);
 void get_process(char **command, char *name, char **env);
 char **args(char *command, char *delim);
 int list_words(char *command, char *delim);
@@ -29,5 +34,6 @@ int _execvp(char *filename, char **arguments);
 void exec_command(char **command, char **arguments, char *name);
 char *_getenv(const char *name);
 int _strcmp(char *s1, char *s2);
+void handle_sigint(void);
 
 #endif /* SHELL_H */
