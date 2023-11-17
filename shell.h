@@ -35,6 +35,6 @@ int _execvp(char *filename, char **arguments);
 void exec_command(char **command, char **arguments, char *name);
 char *_getenv(const char *name);
 int _strcmp(char *s1, char *s2);
-void handle_sigint(void);
+char *check_path(char *filename);
 
 #endif /* SHELL_H */
