@@ -9,7 +9,7 @@ void handle_built_ins(char **lineptr, char **env, int exit_status)
 {
 	int i, j;
 
-	if (_strcmp(*lineptr, "exit") == 0)
+	if (_strcmp(*lineptr, "exit\n") == 0)
 	{
 		free(*lineptr);
 		exit(exit_status);
