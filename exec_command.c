@@ -9,7 +9,7 @@ void exec_command(char **command, char **arguments, char *name)
 {
 	if (_strchr(*command, '/') != NULL)
 	{
-		if (execve(*command, arguments, environ) == -1)
+		if (execve(arguments[0], arguments, environ) == -1)
 		{
 			free(arguments);
 			free(*command);
