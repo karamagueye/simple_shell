@@ -1,0 +1,8 @@
+TEST_SUITES
+allowed_functions
+runchecker.bash
+exercices
+TEST_SUITE
+SIMPLE_SHELL_TEST_SUITE
+Simple-shell_test_cases
+tests

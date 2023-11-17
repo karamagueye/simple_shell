@@ -1,41 +1,39 @@
 #include "shell.h"
 /**
  * get_process - forks the current process and execve the child
- * @command: pointer to the first token
+ * @command: double pointer to the command
+ * @name: name of the program
+ * @env: environment
  */
-void get_process(char *command)
+void get_process(char **command, char *name, char **env)
 {
 	pid_t pid;
 	int status;
-	extern char **environ;
-	char **args;
+	char **arguments;
 
-	args = malloc(sizeof(char *) * 2);
-	if (args == NULL)
-	{
-		perror("malloc");
-		exit(5);
-	}
-	args[0] = command;
-	args[1] = NULL;
+	arguments = args(*command, " ");
 	pid = fork();
 	if (pid == -1)
 	{
+		free(*command);
 		perror("fork");
 		exit(3);
 	}
 	if (pid == 0)
 	{
-		if (execve(args[0], args, environ) == -1)
-		{
-			perror("./shell");
-			exit(4);
-		}
+		exec_command(command, arguments, name);
 	}
 	else
 	{
-		wait(&status);
-		shell();
+		if (wait(&status) == -1)
+		{
+			free(arguments);
+			free(*command);
+			perror("wait");
+			exit(6);
+		}
+		free(arguments);
+		free(*command);
+		shell(name, env, WEXITSTATUS(status));
 	}
-	free(*args);
 }

@@ -35,34 +35,32 @@ int main()
         }
 =======
  * shell - Display a prompt and wait for the user to type a command infinitely
+ * @name: name of the executable
+ * @env: environment
+ * @exit_status: exit status of child process
  */
-void shell(void)
+void shell(char *name, char **env, int exit_status)
 {
-	char *prompt = "$ ", *lineptr = NULL;
-	size_t n = 0;
-	ssize_t gr, w;
+	char *prompt = "$ ";
+	ssize_t w;
 
 	while (1)
 	{
-		w = write(STDOUT_FILENO, prompt, len(prompt));
-		if (w == -1)
+		if (isatty(STDIN_FILENO) == 1)
 		{
-			perror("write");
-			exit(1);
+			w = write(STDOUT_FILENO, prompt, len(prompt));
+			if (w == -1)
+			{
+				perror("write");
+				exit(1);
+			}
 		}
 		while (1)
-		{
-			gr = getline(&lineptr, &n, stdin);
-			if (gr == -1)
-			{
-				perror("getline");
-				exit(2);
-			}
-			if (lineptr[gr - 1] == '\n')
-				lineptr[gr - 1] = '\0';
-			get_process(lineptr);
-		}
+			_getline(name, env, exit_status);
 	}
+<<<<<<< HEAD
 	free(lineptr);
 >>>>>>> 966dfa5297fd484a41e9ca0c3af7070cb72121c2
+=======
+>>>>>>> 466aa37aaa751975329fa44dfd4454f601ecc8e0
 }
