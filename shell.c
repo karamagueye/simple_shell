@@ -1,4 +1,10 @@
 #include "shell.h"
+/**
+ * shell - displays a prompt and waits for input infinitely
+ * @name: name of the program
+ * @env: environment
+ * @exit_status: exit status of child process
+ */
 void shell(char *name, char **env, int exit_status)
 {
 	char *prompt = "$ ";

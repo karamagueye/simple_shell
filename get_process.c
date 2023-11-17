@@ -15,6 +15,7 @@ void get_process(char **command, char *name, char **env)
 	pid = fork();
 	if (pid == -1)
 	{
+		free(arguments);
 		free(*command);
 		perror("fork");
 		exit(3);
